@@ -1,0 +1,97 @@
+\documentclass{letter}
+
+\usepackage[left=0.75in, right=0.75in, top=1.1in, bottom=0.75in]{geometry}
+\usepackage{fancyhdr, amsmath, amssymb, mathtools, xcolor, graphicx, listings, mathpazo}
+\graphicspath{{.}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Page \thepage}
+\chead{AMSC808N Homework 1}
+\lhead{Tyler Hoffman}
+\setlength{\headsep}{0.2in}
+
+\newcounter{problem}
+\newcounter{subproblem}[problem]
+\newcounter{solution}
+
+\renewcommand{\thesubproblem}{(\alph{subproblem})}
+
+\newcommand{\Problem}[2]{%
+	\stepcounter{problem}%
+	\leftskip=0pt%
+	\theproblem.~\textbf{{#1.}} #2 \par%
+}
+
+\newcommand{\Subproblem}[1]{%
+	\stepcounter{subproblem}%
+	\leftskip=15pt%
+	\thesubproblem~ #1 \par%
+}
+
+\newcommand{\Solution}[1]{%
+	\textbf{Solution.} #1 \par%
+}
+
+\newcommand{\Due}[1]{\textbf{Due: #1} \par}
+
+\newcommand{\UNFINISHED}{\textbf{\color{red} UNFINISHED}}
+\newcommand{\CHECK}{\textbf{\color{orange} CHECK ME}}
+
+\newcommand{\iu}{{i\mkern1mu}}
+\newcommand{\T}{\intercal}
+\newcommand{\R}{\mathbb{R}}
+
+\DeclareMathOperator{\diag}{diag}
+
+\usepackage{hyperref}
+\begin{document}
+    \Due{17 Sept 2020}
+    \Problem{KKT matrix}{Show that the KKT matrix of the system \begin{align*}
+        \begin{bmatrix} G & A^\T_W \\ A_W & 0 \end{bmatrix} \begin{bmatrix} -p_k \\ \lambda \end{bmatrix} = \begin{bmatrix} \nabla f(x_k) \\ 0 \end{bmatrix}.
+    \end{align*} with $G \in \mathbb{R}^{d \times d}$ SPD, $A \in \mathbb{R}^{m \times d}$ with linearly independent rows, is of \emph{saddle-point type}. That is, it has $d$ positive eigenvalues and $m$ negative eigenvalues. \emph{Hint: omit the subscript $W$ for brevity. Find matrices $X$ and $S$ ($S$ is called the \textbf{Schur complement}) such that \begin{align*}
+        \begin{bmatrix} G & A^\T \\ A & 0 \end{bmatrix} = \begin{bmatrix} I & 0 \\ X & I \end{bmatrix} \begin{bmatrix} G & 0 \\ 0 & S \end{bmatrix} \begin{bmatrix} I & X^\T \\ 0 & I \end{bmatrix}.
+    \end{align*} Then use Sylvester's Law of Inertia to finish the proof.}}
+    \Solution{We begin by multiplying out the matrix equation. \begin{align*}
+        \begin{bmatrix} G & A^\T \\ A & 0 \end{bmatrix} &= \begin{bmatrix} I & 0 \\ X & I \end{bmatrix} \begin{bmatrix} G & 0 \\ 0 & S \end{bmatrix} \begin{bmatrix} I & X^\T \\ 0 & I \end{bmatrix} \\
+        &= \begin{bmatrix} G & 0 \\ XG & S \end{bmatrix} \begin{bmatrix} I & X^\T \\ 0 & I \end{bmatrix} \\
+        &= \begin{bmatrix} G & GX^\T \\ XG & XGX^\T + S \end{bmatrix}
+    \end{align*} Equating both sides gives the following four equations: \begin{align*}
+        G &= G \\ 
+        GX^\T &= A^\T \\ 
+        XG &= A \\
+        XGX^\T + S &= 0
+    \end{align*} which imply that $X = AG^{-1}$ ($G$ is symmetric so it is invertible) and hence that \begin{align*}
+        0 &= XGX^\T + S = (AG^{-1})G(AG^{-1})^\T + S = AG^{-1}A^\T + S \\
+        \implies S &= -AG^{-1}A^\T
+    \end{align*} where we also make use of $G$ being symmetric to write $G^{-\T} = G^{-1}$. Rewriting our original matrix equation now gives \begin{align*}
+        \begin{bmatrix} G & A^\T \\ A & 0 \end{bmatrix} = \begin{bmatrix} I & 0 \\ AG^{-1} & I \end{bmatrix} \begin{bmatrix} G & 0 \\ 0 & -AG^{-1}A^\T \end{bmatrix} \begin{bmatrix} I & G^{-1}A^\T \\ 0 & I \end{bmatrix}.
+    \end{align*} Since $G \in \mathbb{R}^{d\times d}$ is symmetric, it has $d$ distinct eigenvalues and since $G$ is positive-definite all the eigenvalues are positive. Since $A \in \mathbb{R}^{m\times d}$ has full rank, it is a surjective map onto its image, i.e. its reduced row echelon form has all 1's down the main diagonal. Let $G^{-1} = QDQ^\T$ with $Q \in \mathbb{R}^{d\times d}$ an orthogonal matrix and $D = \diag\{1/\lambda_i\}$ where $\lambda_i > 0$ are the eigenvalues of $G$; we can do all of this as $G$ is SPD. Then we have \begin{align*}
+        AG^{-1} &= AQDQ^\T \\
+        AG^{-1}A^\T &= AQDQ^\T A^\T \\
+        -AG^{-1}A^\T &= AQ(-D)Q^\T A^\T.
+    \end{align*} Since $A$ has full rank and $Q$ is orthogonal, we can rewrite them into $B = AQ$ which will also have full rank. Hence $-AG^{-1}A^\T = B(-D)B^\T \in \mathbb{R}^{m \times m}$, which is where the $m$ negative eigenvalues come from. (As $A$ is full rank, none of the eigenvalues of $G^{-1}$ are mapped to zero, implying that there are $m$ negative eigenvalues.) To conclude, we know the dimension of the KKT matrix must be $(d+m) \times (d+m)$ and we have found $d$ positive eigenvalues and $m$ negative eigenvalues. By Sylvester's Law of Inertia, we must conclude that there are no zero eigenvalues as the total number of eigenvalues is $d+m$.}
+
+    \Problem{Equality-constrained QP}{Consider an equality-constrained QP ($G$ is symmetric) \begin{align*}
+        \frac{1}{2}x^\T Gx + c^\T x &\rightarrow \min \hspace{2mm} \text{subject to}  \\
+        Ax &= b.
+    \end{align*} Assume that $A$ is full rank (i.e., its rows are linearly independent) and $Z^\T GZ$ is positive definite where $Z$ is a basis for the null space of $A$, i.e., $AZ = 0$.}
+    \Subproblem{Write the KKT system for this case in matrix form.}
+    \Solution{Using the same process as shown in class, the KKT system for this case in matrix form is \begin{align*}
+        \begin{bmatrix} G & A^\T \\ A & 0 \end{bmatrix} \begin{bmatrix} -x \\ \lambda \end{bmatrix} = \begin{bmatrix} c^\T \\ b \end{bmatrix}.
+    \end{align*}}
+    \Subproblem{Show that $K$, the matrix of this system, is invertible. \emph{Hint: assume that there is a vector $z = (x, y)^\T$ such that $Kz = 0$. Consider the form $z^\T Kz$ and so on. You should conclude that then $z = 0$.}}
+    \Solution{We begin by writing out the assumption $Kz = 0$: \begin{align*}
+        \begin{bmatrix} G & A^\T \\ A & 0 \end{bmatrix} \begin{bmatrix} x \\ y \end{bmatrix} = 0 \implies \begin{cases} Gx + A^\T y = 0 \\ Ax = 0 \end{cases}.
+    \end{align*} Now we consider the form $z^\T K z$ (which naturally equals 0 as a result of $Kz$ equalling 0): \begin{align*}
+        0 &= \begin{bmatrix} x^\T & y^\T \end{bmatrix} \begin{bmatrix} G & A^\T \\ A & 0 \end{bmatrix} \begin{bmatrix} x \\ y \end{bmatrix} = \begin{bmatrix} x^\T & y^\T \end{bmatrix} \begin{bmatrix} Gx + A^\T y \\ Ax \end{bmatrix} = x^\T Gx + x^\T A^\T y + y^\T Ax \\
+        &= x^\T Gx + (Ax)^\T y + y^\T Ax \\
+        &= x^\T Gx
+    \end{align*} as $Ax = 0$ from above. Due to this, $x \in \text{nul}\{A\}$ and hence can be written as $x = Zv$ for some $v \in \R^m$. Therefore $0 = x^\T G x = (Zv)^\T G Zv = v^\T Z^\T GZv$. By positive-definiteness of $Z^\T GZ$, $v = 0$ which in turn implies that $x = 0$. Returning to the original system, we now have \begin{align*}
+        0 = Gx + A^\T y = A^\T y \implies y = 0
+    \end{align*} because $A$ has full rank. Since $x = 0$ and $y = 0$, we have that $z = (x, y)^\T = 0$ and therefore that $K$ is invertible.}
+    \Subproblem{Conclude that there exists a unique vector $(x^*, \lambda^*)^\T$ that solves the KKT system. Note that since we have only equality constraints, positivity of $\lambda$ is irrelevant.}
+    \Solution{Since $K$ is invertible, we know it is a bijection which implies that there exists a unique vector $z$ such that \begin{align*}
+        Kz = \begin{bmatrix} c^\T \\ b \end{bmatrix}.
+    \end{align*} Write $z = (x^*, \lambda^*)^\T$ where $x^* \in \R^d$ and $\lambda^* \in \R^m$. As such, the KKT system is solved (KKT conditions are met): the first matrix equation is the Lagrange multipliers condition and the second equation is the equality constraints, KKT conditions (i) and (ii) respectively. KKT conditions (iii) and (iv) only involve inequality constraints so they need not be met. Finally, since there are only equality constraints, condition (ii) ($c_i(x^*) = 0$) implies condition (v) ($\lambda_i^*c_i(x^*) = 0$). Therefore, all the conditions are met and $z$ solves the system.}
+\end{document}

@@ -1,0 +1,130 @@
+\documentclass{letter}
+
+\usepackage[left=0.75in, right=0.75in, top=1.1in, bottom=0.75in]{geometry}
+\usepackage{fancyhdr, amsmath, amssymb, mathtools, xcolor, graphicx, listings, mathpazo}
+\graphicspath{{.}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Page \thepage}
+\chead{AMSC808N Homework 4}
+\lhead{Tyler Hoffman}
+\setlength{\headsep}{0.2in}
+
+\newcounter{problem}
+\newcounter{subproblem}[problem]
+\newcounter{solution}
+
+\renewcommand{\thesubproblem}{(\alph{subproblem})}
+
+\newcommand{\Problem}[2]{%
+	\stepcounter{problem}%
+	\leftskip=0pt%
+	\theproblem.~\textbf{{#1.}} #2 \par%
+}
+
+\newcommand{\Subproblem}[1]{%
+	\stepcounter{subproblem}%
+	\leftskip=15pt%
+	\thesubproblem~ #1 \par%
+}
+
+\newcommand{\Solution}[1]{%
+	\textbf{Solution.} #1 \par%
+}
+
+\newcommand{\Due}[1]{\textbf{Due: #1} \par}
+
+\newcommand{\UNFINISHED}{\textbf{\color{red} UNFINISHED}}
+\newcommand{\CHECK}{\textbf{\color{orange} CHECK ME}}
+
+\newcommand{\iu}{{i\mkern1mu}}
+\newcommand{\T}{\intercal}
+\newcommand{\R}{\mathbb{R}}
+
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\nul}{nul}
+
+\usepackage{hyperref}
+\begin{document}
+    \Due{22 Oct 2020}
+
+    \Problem{Rayleigh quotient}{Let $A$ be a symmetric matrix. Consider the Rayleigh quotient \begin{align*}
+        \rho_A(x) = \frac{x^\T A x}{x^\T x}, \hspace{0.5cm} x \in \R^d.
+    \end{align*} Note that since $\rho_A(x)$ is invariant along every line passing through the origin, one can consider the function $\phi(x) = x^\T Ax$ restricted to the unit sphere $\|x\|_2^2 = 1$ instead. Prove that:}
+    \Subproblem{$v$ is a stationary point of $\rho_A$ if and only if $v$ is an eigenvector of $A$ and $\rho_A(v) = \lambda_v$, the corresponding eigenvalue.}
+    \Solution{First, we show that $v$ being an eigenvector of $A$ and $\rho_A(v) = \lambda_v$ implies $\nabla \rho_A(v) = 0$: \begin{align*}
+        \nabla \rho_A(x) &= \nabla \Big(\frac{x^\T A x}{x^\T x}\Big) = \frac{x^\T x (2Ax) - 2x^\T Ax(x)}{(x^\T x)^2} \\
+        \nabla \rho_A(v) &= \frac{v^\T v (2Av) - 2v^\T A v (v)}{(v^\T v)^2} = \frac{v^\T v (2\lambda_v v) - 2v^\T (\lambda_v v)v}{(v^\T v)^2} = \frac{v^\T v(2\lambda_v v - 2\lambda_v v)}{(v^\T v)^2} = 0.
+    \end{align*} Next, to show the other direction, we manipulate the expression $\nabla \rho_A(v)$: \begin{align*}
+        \nabla \rho_A(v) = \frac{v^\T v (2Av) - 2(v^\T A v)v}{(v^\T v)^2} &= 0 \\
+        \implies v^\T v (2Av) - 2(v^\T A v) v &= 0 \\
+        \implies v^\T v (2Av) &= 2(v^\T A v) v \\
+        \implies Av &= \frac{v^\T Av}{v^\T v}v.
+    \end{align*} Let $\lambda_v = \frac{v^\T Av}{v^\T v}$. Then we have $Av = \lambda_v v$, i.e. $v$ is an eigenvector of $A$ and $\rho_A(v) = \lambda_v$ as desired.}
+
+    \Subproblem{The only local minima and maxima of $\rho_A$ are the global minimum and maximum and all other stationary points are saddles.}
+    \Solution{Here, we use $\rho_A$ instead of $\rho_A$ for simplicity. Let $x_M, x_m \in \R^d$ be the global maximizer and global minimizer such that $\rho_A(x_m) \leq \rho_A(x) \leq \rho_A(x_M) \, \forall x \in \R^d$. As a result, we also have $\nabla \rho_A(x_m) = \nabla \rho_A(x_M) = 0$. By (a), then, we have $Ax_m = \lambda_m x_m$ and $Ax_M = \lambda_M x_M$ for eigenvalues $\lambda_m, \lambda_M$. Therefore, we have that \begin{align*}
+        \rho_A(x_m) = \lambda_m \leq \rho_A(x) \leq \lambda_M = \rho_A(x_M) \hspace{0.5cm} \forall x \in \R^d.
+    \end{align*} So we have that the global maximum and minimum exist and occur at the maximum and minimum eigenvectors.
+    
+    To showt that all the other stationary points (i.e., eigenvectors) are saddle points, we consider the problem \begin{align*}
+        \phi(x) &= x^\T A x \rightarrow \min \text{ subject to} \\
+        \|x\|_2^2 &= 1
+    \end{align*} which has Lagrangian $\Lambda(\ell,x) = x^\T A x - \ell (x^\T x - 1)$. Now use the \emph{bordered Hessian}, defined for constrained optimization problems as \begin{align*}
+        H(\ell,x) = \begin{bmatrix} 0 & \Big(\frac{\partial g}{\partial x}\Big)^\T \\ \frac{\partial g}{\partial x} & \frac{\partial^2 \Lambda}{\partial x^2} \end{bmatrix}
+    \end{align*} where $g(x) = \|x\|_2^2 = 1$ is our constraint (from \href{https://en.wikipedia.org/wiki/Hessian_matrix\#Bordered_Hessian}{Wikipedia}). Plugging in $g$ and $\Lambda$, we get \begin{align*}
+        H(\ell,x) = \begin{bmatrix} 0 & 2x^\T \\ 2x & 2A - 2\ell I \end{bmatrix}.
+    \end{align*} From line 2 of (\href{http://www.cs.cornell.edu/~bindel/class/sjtu-summer19/lec/2019-05-29.pdf}{Bindel}, page 4), we see that when $x$ is an eigenvector $v$ of $A$, the optimal Lagrange multiplier is $\ell = \rho_A(v)$. Thus, when evaluating the Hessian at some eigenvector $v \neq x_M, x_m$ we have \begin{align*}
+        H(\lambda_v, v) = \begin{bmatrix} 0 & 2v^\T \\ 2v & 2A - 2\lambda_vI \end{bmatrix}.
+    \end{align*} Check the value of this quadratic form at another eigenpair $(\lambda_u, u)$ and use the fact that the eigenvectors form an orthonormal basis: \begin{align*}
+        \begin{bmatrix} \lambda_u & u^\T \end{bmatrix} H(\lambda_v, v) \begin{bmatrix} \lambda_u \\ u \end{bmatrix} &= \begin{bmatrix} \lambda_u & u^\T \end{bmatrix} \begin{bmatrix} 0 & 2v^\T \\ 2v & 2A - 2\lambda_vI \end{bmatrix} \begin{bmatrix} \lambda_u \\ u \end{bmatrix} \\
+        &= \begin{bmatrix} \lambda_u & u^\T \end{bmatrix} \begin{bmatrix} 2v^\T u \\ 2\lambda_u v + 2Au - 2\lambda_v u \end{bmatrix} \\
+        &= 2\lambda_u v^\T u + 2\lambda_u u^\T v + 2u^\T A u - 2 \lambda_v u^\T u \\
+        &= 2\lambda_u - 2\lambda_v.
+    \end{align*} Therefore, if we take $u$ to be an eigenvector such that $\lambda_u > \lambda_v$, this quantity will be positive, while if $\lambda_u < \lambda_v$, the quantity is negative. Hence the Hessian is an indefinite form---neither positive- nor negative-semidefinite---at every eigenvector that is not $x_m$ or $x_M$; as a result, these eigenvectors are all saddle points.}
+
+    \Problem{Eckart-Young-Mirsky}{Prove the Eckart-Young-Mirsky Theorem for any Ky-Fan norm, i.e., if $A = U\Sigma V^\T$ is the SVD of $A$ and $M$ is any matrix of the size of $A$ such that $\rank M \leq k$, then \begin{align*}
+        \|A - M\| \geq \|A - U_k\Sigma_kV_k^\T\|
+    \end{align*} for any Ky-Fan norm $\|\cdot \|$.}
+    \Solution{The definition of a Ky Fan norm is as follows: \begin{align*}
+        \|A\|_p = \sum_{j=1}^{\min(p, r)} |\sigma_j|
+    \end{align*} where $r = \rank A$ and $\sigma_1 \geq \dots \geq \sigma_n \geq 0$ are the singular values of $A \in \R^{n\times d}$. Let $C \coloneqq A - M$ and let the singular values of $M$ and $C$ be $\mu_1 \geq \dots \geq \mu_n \geq 0$ and $\gamma_1 \geq \dots \geq \gamma_n \geq 0$, respectively. 
+
+    Our approach follows (Dax 2013). First, let $\rank M = k$. We will apply the Right and Left Courant-Fischer Minimax Theorems to show that $\gamma_1 \geq \sigma_{k+1}$. Recall that the Right Courant-Fischer Minimax Theorem states that \begin{align*}
+        \sigma_j &= \max_{V_j}\min \{\|Av\|_2 | v \in V_j, \|v\|_2 = 1\} \hspace{1cm} \text{and}\\
+        \sigma_j &= \min_{V_{j^*}}\max \{\|Av\|_2 | v \in V_{j^*}, \|v\|_2 = 1\}
+    \end{align*} where $j^* = d + 1 - j$ and $V_j$ is an arbitrary $j$-dimensional subspace of $\R^n$ (Dax 2013). Similarly, the Left Courant-Fischer Minimax Theorem says \begin{align*}
+        \sigma_i &= \max_{U_i}\min \{\|A^\T u\|_2 | u \in U_i, \|u\|_2 = 1\} \hspace{1cm} \text{and}\\
+        \sigma_i &= \min_{U_{i^*}}\max \{\|A^\T u\|_2 | u \in U_{i^*}, \|u\|_2 = 1\}
+    \end{align*} where $i^* = n + 1 - i$ and $U_i$ is an arbitrary $i$-dimensional subspace of $\R^d$ (Dax 2013). To prove the earlier inequality, take $V_{j^*} = \nul M$. Then $j^* = d - k$ and $j = k + 1$ from the definition of $j^*$ in the theorem. As a result, we have \begin{align*}
+        \gamma_1 &= \max \{\|(A - M)v\|_2 | v \in \R^d, \|v\|_2 = 1\} &\text{(definition of singular values of $C$)} \\
+        &\geq \max\{\|(A - M)v\|_2 | v \in \nul M, \|v\|_2 = 1\} &\text{($\nul M \subset \R^d$)} \\
+        &= \max\{\|Av\|_2 | v \in \nul M, \|v\|_2 = 1\} &\text{($v \in \nul M \implies Mv = 0$)} \\
+        &\geq \sigma_j = \sigma_{k+1} &\text{(Right Courant-Fischer Minimax Theorem)}
+    \end{align*} and so this Lemma is proven.
+    
+    The next building block we'll need is Weyl's Theorem. Under our current setup, the theorem states that $\mu_i + \gamma_j \geq \sigma_{i+j-1}$, given that $\sigma_\ell = 0$ whenever $\ell > d$. To prove it, let $M_{i-1}$ be a rank $i-1$ truncated SVD of $M$ and $C_{j-1}$ be a rank $j-1$ truncated SVD of $C$. As a result, the largest singular value of $M - M_{i-1}$ is $\mu_i$ and the largest singular value of $C - C_{j-1}$ is $\gamma_j$: \begin{align*}
+        \mu_i &= \max \{\|(M - M_{i-1})v\|_2 | v \in \R^d, \|v\|_2 = 1\} \hspace{1cm} \text{and}\\
+        \gamma_j &= \max \{\|(C - C_{j-1})v\|_2 | v \in \R^d, \|v\|_2 = 1\}.
+    \end{align*} If we define $F = M_{i-1} + C_{j-1} \in \R^{n\times d}$, then $\rank F \leq i + j - 2$ and $A - F = (M-M_{i-1}) + (C-C_{j-1})$. Therefore, combining the two definitions for $\mu_i$ and $\gamma_j$ from above, we get \begin{align*}
+        \mu_i + \gamma_j \geq \max \{\|(A - F)v\|_2 | v\in\R^d, \|v\|_2 = 1\} \geq \sigma_{i + j - 1}
+    \end{align*} where the last inequality is a result from our previous Lemma (plug in the matrices in question). So Weyl's Theorem is proven.
+    
+    However, we haven't used all the assumptions yet---in particular, $\rank M \leq k$, which implies that $\mu_i = 0$ for $i = k+1, \dots, d$. If we make the substitution $i = k + 1$ in the statement of Weyl's Theorem, we get \begin{align*}
+        \mu_i + \gamma_j \geq \sigma_{i+j-1} \implies \gamma_j \geq \sigma_{j+k}
+    \end{align*} from basic arithmetic. Simply put, if $\rank M \leq k$, then the singular values of $C$ majorize the singular values of $A - U_k\Sigma_kV_k^\T$.
+    
+    From here, our job is mostly done. Since the singular values of $A - M$ majorize the singular values of $A - U_k\Sigma_kV_k^\T$ when $\rank M \leq k$, we have that necessarily \begin{align*}
+        \sum_{j=1}^k |\gamma_j| \geq \sum_{j=1}^k |\sigma_{j+k}| \implies \|A - M\|_k \geq \|A - U_k\Sigma_kV_k^\T\|_k
+    \end{align*} where the norms in the second inequality are the $k$th Ky Fan norms. Finally, recall that the Ky Fan Dominance Theorem states $\|X\|_k \geq \|Y\|_k \iff \|X\| \geq \|Y\|$ for any orthogonally invariant norm $\| \cdot \|$ (Li and Mathias 1998). Therefore, by the Ky Fan Dominance Theorem, \begin{align*}
+        \|A - M\|_k \geq \|A - U_k\Sigma_kV_k^\T\|_k \implies \|A - M\| \geq \|A - U_k\Sigma_kV_k^\T\|
+    \end{align*} for any orthogonally invariant norm $\|\cdot\|$ and the proof is complete.
+    
+    References used: 
+    
+    Dax, A. (2013). From eigenvalues to singular vales: a review. \emph{Advances in Pure Mathematics}, 3, pp. 8-24.
+
+    Li, C. and Mathias, R. (1998). Generalizations of Ky Fan's dominance theorem. \emph{Siam Journal of Matrix Analysis and Applications}, 19(1), pp. 99-106.}
+\end{document}
