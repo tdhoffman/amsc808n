@@ -104,7 +104,8 @@ def nuclear_norm(A, lbda=0.01, maxiter=1000):
 def CUR(A, k, c, r=None):
     def column_select(A, k, c):
         # Performs the ColumnSelect algorithm on A with rank parameter k
-        # original idea (basically the same as the in class version)
+        # original idea (basically the same as the in class version but
+        # translated into Python)
         _, d = A.shape
         _, _, Vt = randomized_svd(A, n_components=k)  # get SVD
         V = Vt.T  # select top k right singular vectors
