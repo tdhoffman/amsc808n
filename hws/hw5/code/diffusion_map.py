@@ -2,7 +2,7 @@ import numpy as np
 from numpy.linalg import eig, pinv
 from scipy.spatial.distance import pdist, squareform
 
-def diffusion_map(X, epsilon=0.01, t=50, alpha=0, dim=2):
+def diffusion_map(X, epsilon=0.01, delta=0.2, alpha=0, dim=2):
     # Define diffusion kernel
     K = np.exp(-squareform(pdist(X))/epsilon)
     
@@ -16,8 +16,11 @@ def diffusion_map(X, epsilon=0.01, t=50, alpha=0, dim=2):
     Da = np.diag(da)
     P = pinv(Da) @ Ka
 
-    # Compute eigendecomposition and embedding
+    # Compute eigendecomposition and t
     Lam, R = eig(P)
+    t = np.ceil(np.log(delta)/(abs(np.log(Lam[-1])) - np.log(abs(Lam[0]))))
+    
+    # Compute and return embedding
     if dim == 2:
         return np.array([Lam[0]**((1-alpha)*t) * R[0,:], 
                          Lam[1]**((1-alpha)*t) * R[1,:]]).T
