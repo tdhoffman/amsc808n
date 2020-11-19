@@ -1,31 +1,41 @@
 import numpy as np
-from numpy.linalg import eig, pinv
-from scipy.spatial.distance import pdist, squareform
+from numpy.linalg import eig, solve, matrix_power
+from sklearn.metrics.pairwise import euclidean_distances
 
-def diffusion_map(X, epsilon=0.01, delta=0.2, alpha=0, dim=2):
-    # Define diffusion kernel
-    K = np.exp(-squareform(pdist(X))/epsilon)
+def diffusion_map(X, epsilon=None, delta=0.2, alpha=0, dim=2):
+    dists2 = euclidean_distances(X, X)**2
     
+    # Choose epsilon
+    if epsilon is None:
+        np.fill_diagonal(dists2, np.inf)
+        epsilon = dists2.min(axis=1).sum()/X.shape[0]
+    
+    # Define diffusion kernel
+    K = np.exp(-dists2/epsilon)
+
     # Renormalize
     q = K.sum(axis=1)
     Q = np.diag(q)
-    Ka = pinv(Q)**alpha @ K @ pinv(Q)**alpha
+    Ka = matrix_power(Q, -alpha) @ K @ matrix_power(Q, -alpha)
 
     # Compute row sums and define P
-    da = Ka.sum(axis=1)
-    Da = np.diag(da)
-    P = pinv(Da) @ Ka
+    Da = np.diag(Ka.sum(axis=1))
+    P = solve(Da, Ka)
 
-    # Compute eigendecomposition and t
+    # Compute (sorted) eigendecomposition and t
     Lam, R = eig(P)
-    t = np.ceil(np.log(delta)/(abs(np.log(Lam[-1])) - np.log(abs(Lam[0]))))
+    idx = Lam.argsort()[::-1]
+    Lam = Lam[idx]
+    R = R[:,idx]
+
+    t = np.ceil(np.log(delta)/(np.log(abs(Lam[dim])) - np.log(abs(Lam[1]))))
     
     # Compute and return embedding
     if dim == 2:
-        return np.array([Lam[0]**((1-alpha)*t) * R[0,:], 
-                         Lam[1]**((1-alpha)*t) * R[1,:]]).T
+        return np.array([Lam[1]**((1-alpha)*t) * R[:,1], 
+                         Lam[2]**((1-alpha)*t) * R[:,2]]).T
     elif dim == 3:
-        return np.array([Lam[0]**((1-alpha)*t) * R[0,:], 
-                         Lam[1]**((1-alpha)*t) * R[1,:],
-                         Lam[2]**((1-alpha)*t) * R[2,:]]).T
+        return np.array([Lam[1]**((1-alpha)*t) * R[:,1], 
+                         Lam[2]**((1-alpha)*t) * R[:,2],
+                         Lam[3]**((1-alpha)*t) * R[:,3]]).T
     else: raise RuntimeError(f'dim must be 2 or 3 (was {dim}')
