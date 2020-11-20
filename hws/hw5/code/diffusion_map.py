@@ -2,14 +2,17 @@ import numpy as np
 from numpy.linalg import eig, solve, matrix_power
 from sklearn.metrics.pairwise import euclidean_distances
 
-def diffusion_map(X, epsilon=None, delta=0.2, alpha=0, dim=2):
+def diffusion_map(X, eps=None, delta=0.2, alpha=0, dim=2):
     dists2 = euclidean_distances(X, X)**2
     
     # Choose epsilon
-    if epsilon is None:
+    if eps is None:
         np.fill_diagonal(dists2, np.inf)
-        epsilon = dists2.min(axis=1).sum()/X.shape[0]
-    
+        epsilon = dists2.min(axis=1).mean() 
+        epsilon *= 1000
+    else:
+        epsilon = eps
+        
     # Define diffusion kernel
     K = np.exp(-dists2/epsilon)
 
