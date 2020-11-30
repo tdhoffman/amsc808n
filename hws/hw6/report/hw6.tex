@@ -102,5 +102,16 @@
         H_0(x) := xG_0(H_1(x)).
     \end{align*} These equations, while theoretically tractable, are in practice extremely difficult to solve. The authors suggest a few methods for using symbolic computer programs or contouur integration to obtain the results.
     
-    The challenge, then, is to find a closed-form expression for the average sizes of components that vertices belong to. In the case with no giant component, this is simply $H'_0(1)$ as this is the first moment of the desired distribution. Here, the authors derive a formula for $\langle s \rangle$ in terms of the average number of first and second neighbors of a vertex (in class, we obtained a quantity in terms only of the average vertex degree). However, things quickly get messier when there is a giant component.}
+    The challenge, then, is to find a closed-form expression for the average sizes of components that vertices belong to. In the case with no giant component, this is simply $H'_0(1)$ as this is the first moment of the desired distribution. Here, the authors derive a formula for $\langle s \rangle$ in terms of the average number of first and second neighbors of a vertex (in class, we obtained a quantity in terms only of the average vertex degree). However, things quickly get messier when there is a giant component. 
+    
+    When there is a giant component, $H_0(1)$ is no longer equal to 1 as it generates the distribution of component sizes for all the non-giant components. Hence, $H_0(1) = 1 - S$ where $S$ is the fraction of the graph occupied by the giant component. As a result, we can use the pair of equations derived earlier to get that $S = 1 - G_0(u)$ where $u$ is the smallest real solution of $u = G_1(u)$ (that is, $u = H_1(1)$): \begin{align*}
+        H_0(1) = 1 - S = G_0(H_1(1)) \implies 1 - G_0(H_1(1)) = S \implies S = 1 - G_0(u).
+    \end{align*}
+    
+    Therefore, $\langle s \rangle$ is the average size of the non-giant component and is equal to $H'_0(1)$ normalized by $H_0(1)$ as $H_0(1) \neq 1$. Using the product rule, this looks like \begin{align*}
+        \langle s \rangle &= \frac{H'_0(1)}{H_0(1)} = \frac{1}{H_0(1)}\left[G_0(H_1(1)) + \frac{G'_0(H_1(1))G_1(H_1(1))}{1 - G'_1(H_1(1))}\right] \\
+        &= \frac{1}{1 - S}\left[G_0(u) + \frac{G'_0(u)G_1(u)}{1 - G'_1(u)}\right] \\
+        &= \frac{1}{1 - S}\left[1 - S + \frac{G'_0(u)u}{1 - G'_1(u)}\right] \\
+        &= 1 + \frac{zu^2}{[1 - S][1 - G'_1(u)]},
+    \end{align*} as desired since $G_0(u) = 1 - S$ and $G'_0(u) = zu$.}
 \end{document}
