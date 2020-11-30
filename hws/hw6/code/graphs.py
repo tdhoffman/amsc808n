@@ -1,5 +1,5 @@
 import numpy as np
-from queue import LifoQueue
+from queue import Queue
 
 WHITE = 1
 GRAY  = 2
@@ -19,7 +19,7 @@ class Node:
 class Graph:
     def __init__(self, n, p):
         self.n, self.p = n, p
-        self.dfs_ran = False
+        self.bfs_ran = None
         self.vertices = [Node(i) for i in range(n)]
 
         probs = np.random.random(size=(n, n))
@@ -32,7 +32,6 @@ class Graph:
         raise RuntimeError('no node found')            
 
     def DFS(self):
-        self.dfs_ran = True
 
         def DFSVisit(u, time, sz):
             sz += 1
@@ -56,7 +55,6 @@ class Graph:
         for u in self.vertices: u.clear()
 
         time = 0
-
         roots = {}
         for u in self.vertices:
             if u.color == WHITE:
@@ -68,27 +66,30 @@ class Graph:
         return roots
     
     def BFS(self, s):
-
+        self.bfs_ran = s
         for u in self.vertices: u.clear()
         s = Node(s)
-
         s.color = GRAY
         s.d = 0
-        Q = LifoQueue()
+        Q = Queue()
         Q.put(s)
 
+        path_lengths = {}
         while not Q.empty():
             u = Q.get()
-            for j in range(self.adj.shape[1]):
+
+            idxs = np.argwhere(self.adj[u.label, :] > 0)
+            for j in idxs:
                 if j == u.label: continue
                 v = self.get_node(j)
                 
-                if v.color == WHITE and self.adj[u.label, j] > 00:
+                if v.color == WHITE:
                     v.color = GRAY
                     v.d = u.d + 1
                     v.parent = u
                     Q.put(v)
-                
+                    path_lengths[v] = v.d
+
             u.color = BLACK
         
-         
+        return sum(path_lengths.values())/len(path_lengths) if path_lengths else 0

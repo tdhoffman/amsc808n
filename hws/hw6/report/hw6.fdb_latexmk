@@ -1,9 +1,10 @@
 # Fdb version 3
-["pdflatex"] 1606696294 "/mnt/c/Users/tyler/Documents/Senior/AMSC808N/hws/hw6/report/hw6.tex" "/mnt/c/Users/tyler/Documents/Senior/AMSC808N/hws/hw6/report/hw6.pdf" "hw6" 1606696295
+["pdflatex"] 1606746739 "/mnt/c/Users/tyler/Documents/Senior/AMSC808N/hws/hw6/report/hw6.tex" "/mnt/c/Users/tyler/Documents/Senior/AMSC808N/hws/hw6/report/hw6.pdf" "hw6" 1606746943
+  "../code/bfsstats.png" 1606745432 14945 447592eb3d028c7a5acec35ceb0934a7 ""
   "../code/dfsstats.png" 1606694238 19021 796b8ba248914542743177ab3d85e4d8 ""
   "/etc/texmf/web2c/texmf.cnf" 1548797381 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/mnt/c/Users/tyler/Documents/Senior/AMSC808N/hws/hw6/report/hw6.aux" 1606696295 662 b2b94621371df8d9296b8bf5bec1b851 ""
-  "/mnt/c/Users/tyler/Documents/Senior/AMSC808N/hws/hw6/report/hw6.tex" 1606696293 10317 d01cf0b98d81fea326f0a1775a7d3285 ""
+  "/mnt/c/Users/tyler/Documents/Senior/AMSC808N/hws/hw6/report/hw6.aux" 1606746739 662 b2b94621371df8d9296b8bf5bec1b851 ""
+  "/mnt/c/Users/tyler/Documents/Senior/AMSC808N/hws/hw6/report/hw6.tex" 1606746942 11638 00d9a4cd90c34c80a56d32c3dc81af25 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1272929888 3287 e6b82fe08f5336d4d5ebc73fb1152e87 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/adobe/palatino/pplb7t.tfm" 1136768653 1616 371d1ee60c04b008c8fd760060cd34f1 ""
@@ -98,13 +99,13 @@
   "/usr/share/texmf/web2c/texmf.cnf" 1503343927 31343 93828589fb0cea665e553ee5a17ad2d4 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1578672436 1522025 712255bf90b3ac3b1340c49a49587b87 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1573076552 718487 8724b0a4b66f42e470cef8a3d5f55718 ""
-  "hw6.aux" 1606696295 662 b2b94621371df8d9296b8bf5bec1b851 ""
-  "hw6.out" 1606696294 0 d41d8cd98f00b204e9800998ecf8427e ""
-  "hw6.tex" 1606696293 10317 d01cf0b98d81fea326f0a1775a7d3285 ""
+  "hw6.aux" 1606746739 662 b2b94621371df8d9296b8bf5bec1b851 ""
+  "hw6.out" 1606746739 0 d41d8cd98f00b204e9800998ecf8427e ""
+  "hw6.tex" 1606746942 11638 00d9a4cd90c34c80a56d32c3dc81af25 ""
   (generated)
-  "/mnt/c/Users/tyler/Documents/Senior/AMSC808N/hws/hw6/report/hw6.pdf"
-  "hw6.out"
-  "/mnt/c/Users/tyler/Documents/Senior/AMSC808N/hws/hw6/report/hw6.log"
   "hw6.log"
+  "/mnt/c/Users/tyler/Documents/Senior/AMSC808N/hws/hw6/report/hw6.log"
   "hw6.aux"
+  "hw6.out"
   "hw6.pdf"
+  "/mnt/c/Users/tyler/Documents/Senior/AMSC808N/hws/hw6/report/hw6.pdf"
