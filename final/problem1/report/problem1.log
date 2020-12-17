@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2019.11.6)  16 DEC 2020 18:13
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2019.11.6)  17 DEC 2020 12:30
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -440,12 +440,12 @@ Overfull \hbox (4.14288pt too wide) in paragraph at lines 57--57
 []\OT1/ppl/m/n/10 Suppose we want to ap-prox-i-mate the func-tion $\OML/zplm/m/it/10 g\OT1/zplm/m/n/10 (\OML/zplm/m/it/10 x\OT1/zplm/m/n/10 ) = \OT1/ppl/m/n/10 1 \OMS/zplm/m/n/10 ^^@ []\OT1/zplm/m/n/10 (\OML/zplm/m/it/10 x\OT1/zplm/m/n/10 )$ \OT1/ppl/m/n/10 on the in-ter-val $\OT1/zplm/m/n/10 [\OT1/ppl/m/n/10 0, \OML/zplm/m/it/10 ^^Y\OT1/zplm/m/n/10 /\OT1/ppl/m/n/10 2\OT1/zplm/m/n/10 ]$ \OT1/ppl/m/n/10 with the func-tion $[]\OT1/zplm/m/n/10 (\OML/zplm/m/it/10 ax \OMS/zplm/m/n/10 ^^@
  []
 
-<../pics/loss_surface.png, id=4, 361.35pt x 361.35pt>
+<../pics/loss_surface.png, id=5, 361.35pt x 361.35pt>
 File: ../pics/loss_surface.png Graphic file (type png)
  <use ../pics/loss_surface.png>
 Package pdftex.def Info: ../pics/loss_surface.png used on input line 74.
 (pdftex.def)             Requested size: 213.10971pt x 233.02649pt.
- <../pics/flat_region.png, id=7, 433.62pt x 289.08pt>
+ <../pics/flat_region.png, id=8, 433.62pt x 289.08pt>
 File: ../pics/flat_region.png Graphic file (type png)
  <use ../pics/flat_region.png>
 Package pdftex.def Info: ../pics/flat_region.png used on input line 74.
@@ -482,10 +482,10 @@ Here is how much of TeX's memory you used:
  14 hyphenation exceptions out of 8191
  29i,14n,43p,619b,390s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/mathpazo/fplmbb.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/mathpazo/fplmr.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/mathpazo/fplmri.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on /mnt/c/Users/tyler/Documents/Senior/AMSC808N/final/problem1/report/problem1.pdf (2 pages, 161991 bytes).
+Output written on /mnt/c/Users/tyler/Documents/Senior/AMSC808N/final/problem1/report/problem1.pdf (2 pages, 162295 bytes).
 PDF statistics:
- 75 PDF objects out of 1000 (max. 8388607)
- 52 compressed objects within 1 object stream
+ 76 PDF objects out of 1000 (max. 8388607)
+ 53 compressed objects within 1 object stream
  3 named destinations out of 1000 (max. 500000)
  23 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -52,7 +52,7 @@
 \begin{document}
     \Due{21 Dec 2020}
 
-    The code for this problem can be found \UNFINISHED
+    The code for this problem can be found at \href{https://github.com/thoffman1/amsc808n/tree/master/final/problem1}{this Github link}.
 
     Suppose we want to approximate the function $g(x) = 1 - \cos(x)$ on the interval $[0, \pi/2]$ with the function $\relu(ax - b)$ where $a$ and $b$ are to be determined. We take 6 training points $x_j = \pi j/10$, $j = 0,1,2,3,4,5$ and set up the following loss function: \begin{align*}
         f(a, b) = \frac{1}{12}\sum_{j = 0}^5 [\relu(ax_j - b) - g(x_j)]^2.

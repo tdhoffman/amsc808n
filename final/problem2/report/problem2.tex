@@ -51,7 +51,7 @@
 \begin{document}
     \Due{21 Dec 2020}
 
-    The code for this problem can be found \UNFINISHED
+    The code for this problem can be found at \href{https://github.com/thoffman1/amsc808n/tree/master/final/problem2}{this Github link}.
 
     \Problem{Epidemic creation}{Consider a SIR model for propagating infectious disease over a random graph with degree distribution $\{p_k\}$ such that there exists a giant component. Let $T$ be the probability for any given edge to transmit the infection. What is the critical transmissibility $T_c$ such that if $T < T_c$ an epidemic cannot occur and if $T > T_c$ an epidemic can occur? Express it via $\kappa := \langle k^2 \rangle / \langle k \rangle$, the ratio of the second and first moments of the original graph. 
     
@@ -115,7 +115,7 @@
 
     \Problem{Numerical calculations for a power-law graph}{Generate a random graph with $n = 10^4$ nodes and power-law degree distribution with $\alpha = 2.2$. You can use the routine provided on ELMS or the procedure it comes from, or write your own. For the generated finite graphs, find:}
     \Subproblem{The average fraction of vertices in the giant component.}
-    \Solution{I generated 100 of these graphs using the given MATLAB function and ported the data to Python for the analysis. For each graph, I ran DFS from the code I used in Homework 6 and retrieved the depth-first forest for the graph. From this, I computed the size of the largest tree in the forest (which is the giant component), divided it by the total number of vertices to get the fraction, and averaged all of these fractions over the 100 graphs. Completing this loop yielded a value of $S = $\UNFINISHED as the average fraction of vertices in the giant component.}
+    \Solution{I generated 100 of these graphs using the given MATLAB function and ported the data to Python for the analysis. For each graph, I ran DFS from the code I used in Homework 6 and retrieved the depth-first forest for the graph. From this, I computed the size of the largest tree in the forest (which is the giant component), divided it by the total number of vertices to get the fraction, and averaged all of these fractions over the 100 graphs. Completing this loop yielded a value of $S = 0.821523$ as the average fraction of vertices in the giant component.}
     \Subproblem{The critical value $T_c$ (it will be different from the infinite graph answer).}
     \Solution{I selected the first of the set of graphs that I generated and chose a node that was in the giant component to be the source node for all the epidemics. Then, I ran a discrete-time SIR model on the graph for 50 values of $T$ between 0 and 0.5, looking for the value of $T$ after which epidemics started to break out. I did not need to run until $T = 1$ as we know $T = 0.4$ will cause an outbreak, so $T_c < 0.4$. This saved time, as the larger $T$ I used the longer the runs took. These results are plotted in Figure 1 below. The last value of $T$ before an epidemic breaks out is $T \approx 0.15$, so we can say $T_c$ is roughly 0.15 as no epidemics occur before this value of $T$ and epidemics are possible after it.
 
