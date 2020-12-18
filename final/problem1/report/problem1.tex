@@ -135,5 +135,5 @@
         \item Power: $\alpha_k = L2^{-k-1}$
         \item Exponential $\alpha_k = Le^{-rk}$ where $r$ controls the speed of the decay
         \item Drop: $\alpha_k = Lr^{\lfloor k/M \rfloor}$ where $M$ is the number of steps we take per drop
-    \end{itemize} In all of these, $L$ is a constant initial learning rate. These all satisfy $\sum_{k=0}^\infty \alpha_k = \infty$, $\sum_{k=0}^\infty \alpha_k^2 < \infty$. Moreover, they all worked, just at different rates of convergence. \UNFINISHED}
+    \end{itemize} In all of these, $L$ is a constant initial learning rate fixed at $L = 0.85\alpha^*$. These all satisfy $\sum_{k=0}^\infty \alpha_k = \infty$, $\sum_{k=0}^\infty \alpha_k^2 < \infty$. Moreover, they all worked, just at different rates of convergence. \UNFINISHED}
 \end{document}
