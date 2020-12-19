@@ -132,8 +132,20 @@
     \Problem{Stochastic gradient descent}{As above, take $a = 1$ and $b = 0$ as the initial guess. Use a simple stochastic gradient descent with a single training point chosen randomly for approximating the gradient of $f$ at each step. Find a strategy for stepsize reduction such that the stochastic gradient descent will converge to the global minimizer.}
     \Solution{See \texttt{prob1.ipynb} for my stochastic gradient descent code. I tested the following schedules: \begin{itemize}
         \item Reciprocal: $\alpha_k = L/k$
-        \item Power: $\alpha_k = L2^{-k-1}$
+        \item Time-based: $\alpha_k = \frac{\alpha_{k-1}}{1 + rk}$ where $r$ controls the speed of the decay
         \item Exponential $\alpha_k = Le^{-rk}$ where $r$ controls the speed of the decay
-        \item Drop: $\alpha_k = Lr^{\lfloor k/M \rfloor}$ where $M$ is the number of steps we take per drop
-    \end{itemize} In all of these, $L$ is a constant initial learning rate fixed at $L = 0.85\alpha^*$. These all satisfy $\sum_{k=0}^\infty \alpha_k = \infty$, $\sum_{k=0}^\infty \alpha_k^2 < \infty$. Moreover, they all worked, just at different rates of convergence. \UNFINISHED}
+    \end{itemize} In all of these, $L$ is a constant initial learning rate . These all satisfy $\sum_{k=0}^\infty \alpha_k = \infty$, $\sum_{k=0}^\infty \alpha_k^2 < \infty$. I also experimented with a constant learning rate fixed at $L$, which does not satisfy such constraints on the reduction schedule. In addition, all of the schedules have the ability to be stepped with parameter $M$. This replaces each $k$ with $\lfloor k / M \rfloor$ when computing $\alpha_k$, adding a step function to delay the decay. I recorded the gradient norms over the iterations for all the schedules and computed the error between the solution found by the optimization and the global minimizer. I extensively tested different hyperparameters to manually tune them and ended up fairly happy with the results. Finally, I wrote a version of this neural network using PyTorch to validate my answers.
+    
+    My code for this can be found near the end of \texttt{prob1.ipynb} in the cell labeled ``My training routine''. To experiment with these hyperparameters, change the parameters in the \texttt{SGD} call and then run the cell below it to view the gradient norms over the iteration. I tested learning rates from 0.1 to 2, $r$ values from 0.1 to 0.95, and $M$ from 1 (no drop) to 100. Increasing $M$ generally led to better performance, allowing the algorithm to fully explore the virtually flat region around the minimizer at each scale before shrinking the step size.
+
+    One set of hyperparameters that seemed to work pretty well for all the schedules was \texttt{maxiter} $= 500$, $L = 1.6$, $r = 0.1$, $M = 40$ (Figure 3). Adding the drop ($M > 1$) to the schedules smoothed out the decay and allowed the iterations to stabilize at each step size level before proceeding. This combination is the worst for the time-based schedule, which gets close to the minimizer in the first coordinate but does not get near it in the second coordinate, and the best for the exponential schedule, which converges to the minimizer. Therefore, my strategy for stepsize reduction and hyperparameter combination is this combination along with the exponential reduction strategy utilizing drops.
+
+    The constant step size schedule (no step size reduction at all) surprisingly worked very well in the widest variety of hyperparameter combinations. It routinely had the least error and would find the minimizer in regimes where none of the other reduction strategies would. This flexibility was highly unexpected when I started out on this problem---I think it comes as a result of the stochasticity that the constant step size gets the iteration to the global minimum even for values of $\alpha$ that do not work for the batch gradient descent.
+
+    Lastly, the PyTorch implementation does not always find the minimum, although I did not implement any step size reduction strategies for it. It does require a significantly smaller learning rate than my homemade version, so there are definitely implementation differences in what that library uses.
+    
+    \begin{center}
+        \includegraphics[scale=0.75]{../pics/schedules.png} \\
+        Figure 3: Sample gradient norms for the given hyperparameter combination.
+    \end{center}}
 \end{document}
